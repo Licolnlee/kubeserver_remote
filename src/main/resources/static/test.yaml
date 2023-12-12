@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: fragdect-pod
+  labels:
+    name: fragdect-pod
+spec:
+  containers:
+    - name: fragdect
+      image: 192.168.71.132:5000/fragdect:v0.1
+      volumeMounts:
+        - mountPath: /workspace/exec/bin
+          name: code
+        - mountPath: /workspace/exec/data
+          name: data
+        - mountPath: /workspace/logs
+          name: logs
+  volumes:
+    - name: data
+      nfs:
+        server: 192.168.71.131
+        path: /mnt/fileServer/code/data
+    - name: code
+      nfs:
+        server: 192.168.71.131
+        path: /mnt/fileServer/code/code
+    - name: logs
+      nfs:
+        server: 192.168.71.131
+        path: /mnt/fileServer/code/data
